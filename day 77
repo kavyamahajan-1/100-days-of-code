@@ -1,0 +1,47 @@
+/*Q127: Write a program that reads text from input.txt, converts all lowercase letters to uppercase, and writes the result to output.txt.
+
+
+Sample Test Cases:
+Input 1:
+Input File (input.txt): Hello World\nC programming
+Output 1:
+Output File (output.txt): HELLO WORLD\nC PROGRAMMING
+
+*/
+
+#include <stdio.h>
+
+int main() {
+    FILE *in, *out;
+    int ch; // int (not char) so the EOF comparison works correctly
+
+    // Open input file for reading
+    in = fopen("input.txt", "r");
+    if (in == NULL) {
+        printf("Error: could not open input.txt\n");
+        return 1;
+    }
+
+    // Open output file for writing (created if it doesn't exist)
+    out = fopen("output.txt", "w");
+    if (out == NULL) {
+        printf("Error: could not create output.txt\n");
+        fclose(in);
+        return 1;
+    }
+
+    // Read each character, convert lowercase to uppercase, write it out
+    while ((ch = fgetc(in)) != EOF) {
+        if (ch >= 'a' && ch <= 'z') {
+            ch = ch - 'a' + 'A';
+        }
+        fputc(ch, out);
+    }
+
+    fclose(in);
+    fclose(out);
+
+    printf("File converted successfully.\n");
+
+    return 0;
+}
